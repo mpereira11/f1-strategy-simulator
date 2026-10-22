@@ -218,3 +218,23 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+# ============================================================
+# Project-specific rules (F1 Race Strategy Simulator)
+# ============================================================
+
+# Editor settings: personal preferences, not project configuration
+.vscode/
+
+# Local data: raw downloads, processed files and the FastF1 cache.
+# The cache will live in data/cache/, so this single rule covers it.
+# Data folders will be created by code (Phase 2), not stored in Git.
+data/
+
+# Safety net: never commit data or cache files, even if one is
+# accidentally saved outside data/
+*.parquet
+*.duckdb
+*.duckdb.wal
+*.ff1pkl

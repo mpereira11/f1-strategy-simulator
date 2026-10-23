@@ -7,10 +7,12 @@
 
 # --- Data (Phase 0+) ---
 fastf1==3.8.3
+requests==2.34.2
 
 # --- Notebooks / exploration (Phase 0+) ---
 jupyter==1.1.1
 ipykernel==7.4.0
+matplotlib==3.11.2
 
 # --- Storage & SQL (Phase 2) ---
 duckdb==2.0.0

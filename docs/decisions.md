@@ -56,3 +56,39 @@
 - **Why:** The repo is a public portfolio project; English makes it accessible to recruiters and developers anywhere.
 - **Discarded alternatives:** Keeping some docs in Spanish (mixed languages in a public repo look inconsistent).
 - **Note:** Personal learning notes stay in Spanish outside the repo.
+
+## D-008: Git workflow with feature branches and pull requests
+
+- **Date:** 2026-10-22
+- **Decision:** `main` always holds working code. Each task is developed on its own
+  branch (`feat/`, `fix/`, `docs/`, `chore/` prefixes, kebab-case names) and merged into
+  `main` through a pull request on GitHub, even when working alone.
+- **Why:** keeps `main` stable, documents each piece of work in a PR, mirrors the
+  industry-standard workflow, and prepares the ground for automated checks on PRs
+  with GitHub Actions (Phase 6).
+- **Alternatives considered:**
+  - Committing directly to `main`: simplest, but no isolation and no record per task.
+  - Feature branches merged locally: isolates work, but leaves no PR history on GitHub.
+
+## D-009: OpenF1 as the primary data source (instead of FastF1)
+
+- **Date:** 2026-10-22
+- **Context:** since ~15 Oct 2026, the official F1 live-timing archive used by FastF1
+  returns HTTP 401 to unauthenticated requests. FastF1 added login support
+  (pre-release 3.9.0a0), which appears to require a paid F1TV subscription, against the
+  project's USD 0 budget. Its fallback mirror only covers 2021–2022.
+- **Decision:** use the OpenF1 API (free, no authentication) as the primary source for
+  laps, stints, pit stops, weather and race control messages. Responses are cached
+  locally as JSON in `data/cache/openf1/`. FastF1 stays in `requirements.txt`.
+- **Why:** unblocks the project at no cost, verified working for the 2025 Bahrain GP,
+  and it is the same source planned for live data in version 2.
+- **Trade-offs:** data starts in 2023 (acceptable: 2026 regulations already limit the
+  value of older seasons); we lose FastF1's helpers (e.g. laps and stints must be joined
+  manually); dependence on a community-run API.
+- **Alternatives considered:**
+  - FastF1 with F1 account login: likely paid, pre-release, fragile for automation
+    (credentials in CI).
+  - Third-party extracted datasets (Kaggle, GitHub repos): mostly built on FastF1,
+    so affected by the same change; less learning value; no automatic updates.
+- **Review trigger:** revisit if FastF1 releases a stable version that can access the
+  archive without a paid subscription (track theOehrly/Fast-F1 issue #978).
